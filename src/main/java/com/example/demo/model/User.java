@@ -2,9 +2,11 @@ package com.example.demo.model;
 
 @Entity
 public class User{
-   private String username;
+    private int id;
+   private String name;
    private String email;
-   private int age;
+   private String password;
+   private String role;
 
    public User(){
 
@@ -31,5 +33,7 @@ public class User{
    public int getAge(){
     return age;
    }
-   public 
+   public void setAge(int age){
+    this.age=age;
+   }
 }
