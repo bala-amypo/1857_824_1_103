@@ -12,17 +12,24 @@ public class User{
 
    }
 
-   public User(String username, String email, int age){
-    this.username=username;
+   public User(int id, String name, String email, String password, String role){
+    this.id=id;
+    this.name=name;
     this.email=email;
-    this.age=age;
+    this.password=password;
+    this.role=role;
    }
-
-   public String getUsername(){
-    return username;
+   public int getId(){
+    return id;
    }
-   public void setUsername(Stringusername){
-    this.username=username;
+    public void setId(){
+        
+    }
+   public String getName(){
+    return name;
+   }
+   public void setName(String name){
+    this.name=name;
    }
    public String getEmail(){
     return email;
