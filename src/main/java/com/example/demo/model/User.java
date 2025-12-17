@@ -12,6 +12,24 @@ public class User{
 
    public User(String username, String email, int age){
     this.username=username;
-    this.email
+    this.email=email;
+    this.age=age;
    }
+
+   public String getUsername(){
+    return username;
+   }
+   public void setUsername(Stringusername){
+    this.username=username;
+   }
+   public String getEmail(){
+    return email;
+   }
+   public void setEmail(String email){
+    this.email=email;
+   }
+   public int getAge(){
+    return age;
+   }
+   public 
 }
