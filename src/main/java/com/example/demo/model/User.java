@@ -1,4 +1,5 @@
 package com.example.demo.model;
+import jakarta.persistence.Entity;
 
 @Entity
 public class User{
@@ -49,5 +50,5 @@ public class User{
    public void setRole(String role){
     this.role=role;
    }
-   
+
 }
