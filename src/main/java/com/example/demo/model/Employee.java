@@ -10,5 +10,6 @@ import jakarta.persistence.Column;
 
 public class Employee{
     @Id
-    @Generated
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private long id;
 }
