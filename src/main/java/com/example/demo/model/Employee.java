@@ -12,4 +12,9 @@ public class Employee{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
+
+    @Column(nullable=false)
+    private String fullname;
+    @Column(nullable=false, unique=true)
+    private String email;
 }
