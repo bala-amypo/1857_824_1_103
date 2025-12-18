@@ -15,6 +15,7 @@ public class Employee{
     private String fullName;
     private String email;
     private String role="STAFF";
+    private String skills;
     privare Long maxWeeklyHours;
     private LocalDateTime createdAt;
     
@@ -39,5 +40,15 @@ public class Employee{
         this.email=email;
     }
 
-    public 
+    public String getRole(){
+        return role;
+    }
+    public void setRole(String role){
+        this.role=role;
+    }
+
+    public String getSkills(){
+        return Skills;
+    }
+    public void setRole(String )
 }
