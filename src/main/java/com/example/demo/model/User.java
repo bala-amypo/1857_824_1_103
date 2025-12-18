@@ -9,7 +9,7 @@ import jakarta.persistence.Column;
 @Entity
 public class User{
     @Id
-    @GeneratedVlaue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
     @Column(nullable=false)
