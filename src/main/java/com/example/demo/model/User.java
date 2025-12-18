@@ -1,7 +1,10 @@
 package com.example.demo.model;
 
 import jakarta.persistence.Entity;
-import jakarta.per
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+impport jakarta.persistence.Column;
 
 @Entity
 public class User{
