@@ -4,12 +4,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-impport jakarta.persistence.Column;
+import jakarta.persistence.Column;
 
 @Entity
 public class User{
+    @Id
+    @GeneratedVlaue(strategy=GenerationType.IDENTITY)
     private int id;
-   private String name;
+
+    @X
+    private String name;
    private String email;
    private String password;
    private String role;
