@@ -16,7 +16,7 @@ public class Employee{
     private String email;
     private String role="STAFF";
     private String skills;
-    privare Long maxWeeklyHours;
+    private Long maxWeeklyHours;
     private LocalDateTime createdAt;
     
     public Long getId(){
