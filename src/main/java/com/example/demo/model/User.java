@@ -13,8 +13,7 @@ public class User{
     private int id;
 
     @Column(nullable=false)
-    private Strin  g name;
-
+    private String name;
     @Column(nullable=false, unique=true)
     private String email;
 
