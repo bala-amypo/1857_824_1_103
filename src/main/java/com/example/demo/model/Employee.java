@@ -50,7 +50,7 @@ public class Employee{
     public String getSkills(){
         return skills;
     }
-    public void setRole(String skills){
+    public void setSkills(String skills){
         this.skills=skills;
     }
 
@@ -65,7 +65,7 @@ public class Employee{
     }
 
     public LocalDateTime getCreatedAt(){
-        return cretedAt;
+        return createdAt;
     }
     public void setCreatedAt(LocalDateTime createdAt){
         this.createdAt=createdAt;
