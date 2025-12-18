@@ -48,7 +48,18 @@ public class Employee{
     }
 
     public String getSkills(){
-        return Skills;
+        return skills;
     }
-    public void setRole(String )
+    public void setRole(String skills){
+        this.skills=skills;
+    }
+
+    public Long getMaxWeeklyHours(){
+        return maxWeeklyHours;
+    }
+    public void setMaxWeeklyHours(Long maxWeeklyHours){
+        if(maxWeeklyHours <= 0){
+            throw
+        }
+    }
 }
