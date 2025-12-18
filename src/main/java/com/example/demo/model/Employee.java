@@ -11,10 +11,17 @@ import jakarta.persistence.Column;
 public class Employee{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String fullname;
     private String email;
     private String role="STAFF";
-    privare 
+    privare Long maxWeeklyHours;
+    private LocalDateTime createdAt;
     
+    public Long getId(){
+        return id;
+    }
+    public void setId(Long id){}
+        this.id=id;
+    }
 }
