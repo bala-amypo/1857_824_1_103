@@ -59,7 +59,15 @@ public class Employee{
     }
     public void setMaxWeeklyHours(Long maxWeeklyHours){
         if(maxWeeklyHours <= 0){
-            throw
+            throw new IllegalArgumentException("maxWeeklyHours must to be greater than 0");
         }
+        this.maxWeeklyHours=maxWeeklyHours;
+    }
+
+    public LocalDateTime getCreatedAt(){
+        return cretedAt;
+    }
+    public void setCreatedAt(LocalDateTime createdAt){
+        this.createdAt=createdAt;
     }
 }
