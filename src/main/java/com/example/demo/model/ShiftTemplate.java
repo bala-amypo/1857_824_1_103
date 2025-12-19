@@ -14,12 +14,7 @@ import java.time.LocalTime;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(uniqueConstraints = {
-    @UniqueConstraint(
-        name = "unique_template_name_department",
-        columnNames = {"template_name", "department_id"}
-    )
-})
+
 public class ShiftTemplate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +46,8 @@ public class ShiftTemplate {
     }
     
     public ShiftTemplate(String templateName, LocalTime startTime, LocalTime endTime, 
-                        String requiredSkills, Department department) {
+        String requiredSkills, Department department) {
+        
         this.templateName = templateName;
         this.startTime = startTime;
         this.endTime = endTime;
