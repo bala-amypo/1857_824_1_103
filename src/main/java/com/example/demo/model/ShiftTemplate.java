@@ -45,9 +45,10 @@ public class ShiftTemplate {
     public ShiftTemplate() {
     }
     
-    public ShiftTemplate(String templateName, LocalTime startTime, LocalTime endTime, 
+    public ShiftTemplate(Long id, String templateName, LocalTime startTime, LocalTime endTime, 
         String requiredSkills, Department department) {
         
+        this.id=id;
         this.templateName = templateName;
         this.startTime = startTime;
         this.endTime = endTime;
