@@ -14,8 +14,7 @@ public class Employee{
             @GeneratedValue(strategy=GenerationType.IDENTITY)
                         private Long id;
                                         private String fullName;
-                                                            private String email;
-                                                                                    private String role="STAFF";
+                                                            private String email;                                  private String role="STAFF";
                                                                                                                 private String skills;
                                                                                                                                                 private Long maxWeeklyHours;
                                                                                                                                                                                     private LocalDateTime createdAt;
