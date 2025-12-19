@@ -42,14 +42,12 @@ public class EmployeeAvailability {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
-    // Additional optional fields for more detailed availability tracking
     @Column(name = "reason")
     private String reason;
     
     @Column(name = "preferred_shift")
     private String preferredShift;
-    
-    // Constructors
+
     public EmployeeAvailability() {
     }
     
@@ -60,7 +58,8 @@ public class EmployeeAvailability {
     }
     
     public EmployeeAvailability(Employee employee, LocalDate availableDate, Boolean available, 
-                               String reason, String preferredShift) {
+        String reason, String preferredShift) {
+
         this.employee = employee;
         this.availableDate = availableDate;
         this.available = available;
@@ -68,7 +67,6 @@ public class EmployeeAvailability {
         this.preferredShift = preferredShift;
     }
     
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -136,8 +134,7 @@ public class EmployeeAvailability {
     public void setPreferredShift(String preferredShift) {
         this.preferredShift = preferredShift;
     }
-    
-    // Lifecycle callbacks
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
@@ -150,24 +147,22 @@ public class EmployeeAvailability {
         updatedAt = LocalDateTime.now();
         validateData();
     }
-    
-    // Validation method
+
     private void validateData() {
         if (availableDate == null) {
             throw new IllegalArgumentException("availableDate cannot be null");
         }
         
         if (availableDate.isBefore(LocalDate.now())) {
-            // You might want to allow past dates for historical data
-            // For current/future availability, uncomment the line below:
-            // throw new IllegalArgumentException("availableDate cannot be in the past");
+
         }
         
         if (available == null) {
-            available = true; // Default to available if not specified
+            available = true; 
         }
     }
     
+
     public boolean isFutureAvailability() {
         return availableDate.isAfter(LocalDate.now());
     }
