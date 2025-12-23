@@ -20,13 +20,10 @@ public class AvailabilityController {
     public String getAvailabilityByEmployee(@PathVariable Long employeeId) {
         return "Availability for employee " + employeeId;
     }
-
     @GetMapping("/{availabilityId}")
     public String getAvailability(@PathVariable Long availabilityId) {
         return "Availability " + availabilityId;
     }
-
-    // REQUIRED BY TEST SUITE
     @GetMapping("/date/{date}")
     public String getAvailabilityByDate(
             @PathVariable
