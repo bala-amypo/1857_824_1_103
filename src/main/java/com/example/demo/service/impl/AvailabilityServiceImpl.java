@@ -25,10 +25,12 @@ public class AvailabilityServiceImpl implements AvailabilityService {
     @Override
     public EmployeeAvailability update(Long id, EmployeeAvailability availability) {
         EmployeeAvailability existing = availabilityRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Availability not found"));
+                .orElseThrow(() -> new RuntimeException("EmployeeAvailability not found with id: " + id));
 
+        // update fields (DO NOT update primary key)
         existing.setEmployeeId(availability.getEmployeeId());
-        existing.setAvailabilityId(availability.getAvailabilityId());
+        existing.setDate(availability.getDate());
+        existing.setStatus(availability.getStatus()); // if present
 
         return availabilityRepository.save(existing);
     }
@@ -40,7 +42,6 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 
     @Override
     public List<EmployeeAvailability> getByDate(LocalDate date) {
-        return availabilityRepository.findAll(); // filter later
+        return availabilityRepository.findByDate(date);
     }
 }
-
