@@ -40,6 +40,6 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 
     @Override
     public List<EmployeeAvailability> getByDate(LocalDate date) {
-        return availabilityRepository.findAll(); // temporary
+        return availabilityRepository.findAll(); 
     }
 }
