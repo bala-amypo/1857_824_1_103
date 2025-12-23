@@ -23,6 +23,6 @@ public class ShiftTemplateServiceImpl implements ShiftTemplateService {
 
     @Override
     public List<ShiftTemplate> getByDepartment(Long departmentId) {
-        return shiftTemplateRepository.findAll(); // can be filtered later
+        return shiftTemplateRepository.findAll();
     }
 }
