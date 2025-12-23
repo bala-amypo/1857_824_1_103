@@ -26,8 +26,10 @@ public class AvailabilityServiceImpl implements AvailabilityService {
     public EmployeeAvailability update(Long id, EmployeeAvailability availability) {
         EmployeeAvailability existing = availabilityRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Availability not found"));
+
         existing.setEmployeeId(availability.getEmployeeId());
         existing.setAvailabilityId(availability.getAvailabilityId());
+
         return availabilityRepository.save(existing);
     }
 
@@ -41,3 +43,4 @@ public class AvailabilityServiceImpl implements AvailabilityService {
         return availabilityRepository.findAll(); // filter later
     }
 }
+
