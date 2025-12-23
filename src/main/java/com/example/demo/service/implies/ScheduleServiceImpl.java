@@ -1,0 +1,30 @@
+package com.example.demo.service.impl;
+
+import com.example.demo.model.GeneratedShiftSchedule;
+import com.example.demo.repository.GeneratedShiftScheduleRepository;
+import com.example.demo.service.ScheduleService;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@Service
+public class ScheduleServiceImpl implements ScheduleService {
+
+    private final GeneratedShiftScheduleRepository scheduleRepository;
+
+    public ScheduleServiceImpl(GeneratedShiftScheduleRepository scheduleRepository) {
+        this.scheduleRepository = scheduleRepository;
+    }
+
+    @Override
+    public List<GeneratedShiftSchedule> generateForDate(LocalDate date) {
+        // scheduling logic will go here
+        return scheduleRepository.findAll();
+    }
+
+    @Override
+    public List<GeneratedShiftSchedule> getByDate(LocalDate date) {
+        return scheduleRepository.findAll();
+    }
+}
