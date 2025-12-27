@@ -1,31 +1,24 @@
 package com.example.demo.controller;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.*;
-
+import com.example.demo.model.GeneratedShiftSchedule;
+import com.example.demo.service.ScheduleService;
 import java.time.LocalDate;
+import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/schedules")
-@Tag(name = "Shift Schedules Endpoints")
 public class ScheduleController {
 
-    @PostMapping("/generate/{date}")
-    public String generateSchedule(
-            @PathVariable
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-            LocalDate date) {
+    private final ScheduleService scheduleService;
 
-        return "Schedule generated for " + date;
+    public ScheduleController(ScheduleService scheduleService) {
+        this.scheduleService = scheduleService;
     }
 
-    @GetMapping("/date/{date}")
-    public String getSchedule(
-            @PathVariable
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-            LocalDate date) {
-
-        return "Schedule for " + date;
+    @GetMapping("/schedule")
+    public List<GeneratedShiftSchedule> generate(@RequestParam String date) {
+        return scheduleService.generateSchedule(LocalDate.parse(date));
     }
 }

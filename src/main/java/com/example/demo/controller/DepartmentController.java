@@ -1,30 +1,37 @@
 package com.example.demo.controller;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.*;
+import com.example.demo.model.Department;
+import com.example.demo.service.DepartmentService;
+import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/departments")
-@Tag(name = "Departments Endpoints")
+@RequestMapping("/departments")
 public class DepartmentController {
 
-    @PostMapping
-    public String createDepartment() {
-        return "Department created";
+    private final DepartmentService departmentService;
+
+    public DepartmentController(DepartmentService departmentService) {
+        this.departmentService = departmentService;
     }
 
-    @GetMapping
-    public String getAllDepartments() {
-        return "All departments";
+    @PostMapping
+    public Department create(@RequestBody Department department) {
+        return departmentService.createDepartment(department);
     }
 
     @GetMapping("/{id}")
-    public String getDepartment(@PathVariable Long id) {
-        return "Department " + id;
+    public Department get(@PathVariable Long id) {
+        return departmentService.getDepartmentById(id);
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteDepartment(@PathVariable Long id) {
-        return "Department deleted " + id;
+    @GetMapping
+    public List<Department> getAll() {
+        return departmentService.getAllDepartments();
     }
 }
