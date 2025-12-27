@@ -7,11 +7,7 @@ public interface EmployeeService {
 
     Employee createEmployee(Employee employee);
 
-    Employee getEmployee(Long id);
+    Employee getEmployeeById(Long id);
 
-    Employee updateEmployee(Long id, Employee employee);
-
-    void deleteEmployee(Long id);
-
-    List<Employee> getAll();
+    List<Employee> getAllEmployees();
 }
