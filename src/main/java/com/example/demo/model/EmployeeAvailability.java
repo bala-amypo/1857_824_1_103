@@ -9,84 +9,61 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Entity
-@Table(name = "generated_shift_schedules")
-public class GeneratedShiftSchedule {
+@Table(name = "employee_availability")
+public class EmployeeAvailability {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate shiftDate;
-
-    private LocalTime startTime;
-
-    private LocalTime endTime;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shift_template_id")
-    private ShiftTemplate shiftTemplate;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "department_id")
-    private Department department;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    public GeneratedShiftSchedule() {
+    private LocalDate availableDate;
+
+    private Boolean available = true;
+
+    public EmployeeAvailability() {
     }
 
-    public GeneratedShiftSchedule(LocalDate shiftDate, LocalTime startTime, LocalTime endTime,
-                                  ShiftTemplate shiftTemplate, Department department, Employee employee) {
-        this.shiftDate = shiftDate;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.shiftTemplate = shiftTemplate;
-        this.department = department;
+    public EmployeeAvailability(Employee employee, LocalDate availableDate, Boolean available) {
         this.employee = employee;
+        this.availableDate = availableDate;
+        this.available = available;
     }
 
     public Long getId() {
         return id;
     }
     
-    public LocalDate getShiftDate() {
-        return shiftDate;
-    }
-    
-    public void setShiftDate(LocalDate shiftDate) {
-        this.shiftDate = shiftDate;
-    }
-    
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-    
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-    
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-    
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
-    }
-    
-    public ShiftTemplate getShiftTemplate() {
-        return shiftTemplate;
-    }
-    
-    public Department getDepartment() {
-        return department;
+    public void setId(Long id) {
+        this.id = id;
     }
     
     public Employee getEmployee() {
         return employee;
+    }
+    
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+    
+    public LocalDate getAvailableDate() {
+        return availableDate;
+    }
+    
+    public void setAvailableDate(LocalDate availableDate) {
+        this.availableDate = availableDate;
+    }
+    
+    public Boolean getAvailable() {
+        return available;
+    }
+    
+    public void setAvailable(Boolean available) {
+        this.available = available;
     }
 }
