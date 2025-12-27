@@ -1,39 +1,44 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Department;
 import com.example.demo.repository.DepartmentRepository;
 import com.example.demo.service.DepartmentService;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
-    private final DepartmentRepository departmentRepository;
+    private final DepartmentRepository repository;
 
-    @Autowired
-    public DepartmentServiceImpl(DepartmentRepository departmentRepository) {
-        this.departmentRepository = departmentRepository;
+    public DepartmentServiceImpl(DepartmentRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public Department createDepartment(Department department) {
-        if (departmentRepository.existsByName(department.getName())) {
-            throw new RuntimeException("Department already exists");
-        }
-        return departmentRepository.save(department);
+    public Department create(Department department) {
+        if (repository.existsByName(department.getName()))
+            throw new RuntimeException("Department exists");
+
+        return repository.save(department);
     }
 
     @Override
-    public Department getDepartmentById(Long id) {
-        return departmentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Department not found"));
+    public Department get(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Department not found"));
     }
 
     @Override
-    public List<Department> getAllDepartments() {
-        return departmentRepository.findAll();
+    public void delete(Long id) {
+        Department d = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Department not found"));
+        repository.delete(d);
+    }
+
+    @Override
+    public List<Department> getAll() {
+        return repository.findAll();
     }
 }

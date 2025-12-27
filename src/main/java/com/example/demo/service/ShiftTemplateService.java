@@ -1,11 +1,16 @@
 package com.example.demo.service;
 
 import com.example.demo.model.ShiftTemplate;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
+@Service
 public interface ShiftTemplateService {
 
-    ShiftTemplate createShiftTemplate(ShiftTemplate template);
+    ShiftTemplate create(ShiftTemplate shiftTemplate);
 
-    List<ShiftTemplate> getTemplatesByDepartment(Long departmentId);
+    List<ShiftTemplate> getByDepartment(Long departmentId);
+
+    List<ShiftTemplate> getAll();
 }
