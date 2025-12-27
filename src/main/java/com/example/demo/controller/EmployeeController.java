@@ -1,49 +1,43 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.CreditCardRecord;
-import com.example.demo.service.CreditCardService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import com.example.demo.model.Employee;
+import com.example.demo.service.EmployeeService;
 import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/cards")
-@Tag(name = "Credit Cards", description = "Credit card management operations")
-@SecurityRequirement(name = "Bearer Authentication")
-public class CreditCardController {
+@RequestMapping("/api/employees")
+public class EmployeeController {
 
-    private final CreditCardService cardService;
+    private final EmployeeService employeeService;
 
-    public CreditCardController(CreditCardService cardService) {
-        this.cardService = cardService;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
-    @PostMapping
-    @Operation(summary = "Add a new credit card", description = "Creates a new credit card record")
-    public ResponseEntity<CreditCardRecord> addCard(@Valid @RequestBody CreditCardRecord card) {
-        return ResponseEntity.ok(cardService.addCard(card));
+    @PostMapping("/register")
+    public Employee registerEmployee(@RequestBody Employee employee) {
+        return employeeService.createEmployee(employee);
+    }
+
+    @GetMapping("/all")
+    public List<Employee> getAllEmployees() {
+        return employeeService.getAllEmployees();
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get credit card by ID", description = "Retrieves a credit card by its ID")
-    public ResponseEntity<CreditCardRecord> getCardById(@PathVariable Long id) {
-        return ResponseEntity.ok(cardService.getCardById(id));
+    public Employee getEmployee(@PathVariable Long id) {
+        return employeeService.getEmployeeById(id);
     }
 
-    @GetMapping
-    @Operation(summary = "Get all credit cards", description = "Retrieves all credit cards")
-    public ResponseEntity<List<CreditCardRecord>> getAllCards() {
-        return ResponseEntity.ok(cardService.getAllCards());
-    }
-
-    @GetMapping("/user/{userId}")
-    @Operation(summary = "Get cards by user", description = "Retrieves all credit cards for a specific user")
-    public ResponseEntity<List<CreditCardRecord>> getCardsByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(cardService.getCardsByUser(userId));
+    @DeleteMapping("/{id}")
+    public void deleteEmployee(@PathVariable Long id) {
+        employeeService.getEmployeeById(id);
     }
 }

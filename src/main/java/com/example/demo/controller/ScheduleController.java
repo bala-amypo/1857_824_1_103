@@ -1,34 +1,24 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.UserProfile;
-import com.example.demo.service.UserProfileService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import com.example.demo.model.GeneratedShiftSchedule;
+import com.example.demo.service.ScheduleService;
+import java.time.LocalDate;
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/users")
-public class UserProfileController {
+public class ScheduleController {
 
-    private final UserProfileService userService;
+    private final ScheduleService scheduleService;
 
-    public UserProfileController(UserProfileService userService) {
-        this.userService = userService;
+    public ScheduleController(ScheduleService scheduleService) {
+        this.scheduleService = scheduleService;
     }
 
-    @PostMapping
-    public ResponseEntity<UserProfile> createUser(@RequestBody UserProfile user) {
-        return ResponseEntity.ok(userService.createUser(user));
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<UserProfile> getUserById(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.getUserById(id));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<UserProfile>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    @GetMapping("/schedule")
+    public List<GeneratedShiftSchedule> generate(@RequestParam String date) {
+        return scheduleService.generateSchedule(LocalDate.parse(date));
     }
 }

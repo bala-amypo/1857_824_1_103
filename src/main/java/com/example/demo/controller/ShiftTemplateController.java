@@ -1,34 +1,37 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.RecommendationRecord;
-import com.example.demo.service.RecommendationEngineService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import com.example.demo.model.ShiftTemplate;
+import com.example.demo.service.ShiftTemplateService;
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/recommendations")
-public class RecommendationController {
+@RequestMapping("/api/templates")
+public class ShiftTemplateController {
 
-    private final RecommendationEngineService recommendationService;
+    private final ShiftTemplateService shiftTemplateService;
 
-    public RecommendationController(RecommendationEngineService recommendationService) {
-        this.recommendationService = recommendationService;
+    public ShiftTemplateController(ShiftTemplateService shiftTemplateService) {
+        this.shiftTemplateService = shiftTemplateService;
     }
 
-    @PostMapping("/generate/{intentId}")
-    public ResponseEntity<RecommendationRecord> generateRecommendation(@PathVariable Long intentId) {
-        return ResponseEntity.ok(recommendationService.generateRecommendation(intentId));
+    @PostMapping("/department/{departmentId}")
+    public ShiftTemplate createTemplate(@RequestBody ShiftTemplate template) {
+        return shiftTemplateService.createShiftTemplate(template);
     }
 
-    @GetMapping
-    public ResponseEntity<List<RecommendationRecord>> getAllRecommendations() {
-        return ResponseEntity.ok(recommendationService.getAllRecommendations());
+    @GetMapping("/department/{departmentId}")
+    public List<ShiftTemplate> getTemplatesByDepartment(@PathVariable Long departmentId) {
+        return shiftTemplateService.getTemplatesByDepartment(departmentId);
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<RecommendationRecord>> getRecommendationsByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(recommendationService.getRecommendationsByUser(userId));
+    @GetMapping("/{id}")
+    public ShiftTemplate getTemplate(@PathVariable Long id) {
+        return null;
     }
 }
