@@ -1,43 +1,39 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Department;
-import com.example.demo.service.DepartmentService;
+import com.example.demo.entity.PurchaseIntentRecord;
+import com.example.demo.service.PurchaseIntentService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/departments")
-public class DepartmentController {
+@RequestMapping("/api/intents")
+public class PurchaseIntentController {
 
-    private final DepartmentService departmentService;
+    private final PurchaseIntentService intentService;
 
-    public DepartmentController(DepartmentService departmentService) {
-        this.departmentService = departmentService;
+    public PurchaseIntentController(PurchaseIntentService intentService) {
+        this.intentService = intentService;
     }
 
     @PostMapping
-    public Department createDepartment(@RequestBody Department department) {
-        return departmentService.createDepartment(department);
-    }
-
-    @GetMapping
-    public List<Department> getAllDepartments() {
-        return departmentService.getAllDepartments();
+    public ResponseEntity<PurchaseIntentRecord> createIntent(@RequestBody PurchaseIntentRecord intent) {
+        return ResponseEntity.ok(intentService.createIntent(intent));
     }
 
     @GetMapping("/{id}")
-    public Department getDepartment(@PathVariable Long id) {
-        return departmentService.getDepartmentById(id);
+    public ResponseEntity<PurchaseIntentRecord> getIntentById(@PathVariable Long id) {
+        return ResponseEntity.ok(intentService.getIntentById(id));
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteDepartment(@PathVariable Long id) {
-        departmentService.getDepartmentById(id);
+    @GetMapping
+    public ResponseEntity<List<PurchaseIntentRecord>> getAllIntents() {
+        return ResponseEntity.ok(intentService.getAllIntents());
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<PurchaseIntentRecord>> getIntentsByUser(@PathVariable Long userId) {
+        return ResponseEntity.ok(intentService.getIntentsByUser(userId));
     }
 }

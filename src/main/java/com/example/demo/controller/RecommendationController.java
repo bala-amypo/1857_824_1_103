@@ -1,43 +1,34 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Employee;
-import com.example.demo.service.EmployeeService;
+import com.example.demo.entity.RecommendationRecord;
+import com.example.demo.service.RecommendationEngineService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/employees")
-public class EmployeeController {
+@RequestMapping("/api/recommendations")
+public class RecommendationController {
 
-    private final EmployeeService employeeService;
+    private final RecommendationEngineService recommendationService;
 
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
+    public RecommendationController(RecommendationEngineService recommendationService) {
+        this.recommendationService = recommendationService;
     }
 
-    @PostMapping("/register")
-    public Employee registerEmployee(@RequestBody Employee employee) {
-        return employeeService.createEmployee(employee);
+    @PostMapping("/generate/{intentId}")
+    public ResponseEntity<RecommendationRecord> generateRecommendation(@PathVariable Long intentId) {
+        return ResponseEntity.ok(recommendationService.generateRecommendation(intentId));
     }
 
-    @GetMapping("/all")
-    public List<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    @GetMapping
+    public ResponseEntity<List<RecommendationRecord>> getAllRecommendations() {
+        return ResponseEntity.ok(recommendationService.getAllRecommendations());
     }
 
-    @GetMapping("/{id}")
-    public Employee getEmployee(@PathVariable Long id) {
-        return employeeService.getEmployeeById(id);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteEmployee(@PathVariable Long id) {
-        employeeService.getEmployeeById(id);
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<RecommendationRecord>> getRecommendationsByUser(@PathVariable Long userId) {
+        return ResponseEntity.ok(recommendationService.getRecommendationsByUser(userId));
     }
 }
