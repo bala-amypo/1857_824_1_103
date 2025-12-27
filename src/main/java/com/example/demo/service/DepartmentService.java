@@ -1,13 +1,18 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Department;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
+@Service
 public interface DepartmentService {
 
-    Department createDepartment(Department department);
+    Department create(Department department);
 
-    Department getDepartmentById(Long id);
+    Department get(Long id);
 
-    List<Department> getAllDepartments();
+    void delete(Long id);
+
+    List<Department> getAll();
 }
