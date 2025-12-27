@@ -1,35 +1,48 @@
 package com.example.demo.controller;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.*;
-
+import com.example.demo.model.EmployeeAvailability;
+import com.example.demo.repository.EmployeeAvailabilityRepository;
+import com.example.demo.service.AvailabilityService;
 import java.time.LocalDate;
+import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/availability")
-@Tag(name = "Employee Availability Endpoints")
 public class AvailabilityController {
 
+    private final AvailabilityService availabilityService;
+    private final EmployeeAvailabilityRepository availabilityRepository;
+
+    public AvailabilityController(
+            AvailabilityService availabilityService,
+            EmployeeAvailabilityRepository availabilityRepository) {
+        this.availabilityService = availabilityService;
+        this.availabilityRepository = availabilityRepository;
+    }
+
     @PostMapping("/{employeeId}")
-    public String setAvailability(@PathVariable Long employeeId) {
-        return "Availability set for employee " + employeeId;
+    public EmployeeAvailability setAvailability(@RequestBody EmployeeAvailability availability) {
+        return availabilityService.markAvailability(availability);
     }
 
     @GetMapping("/employee/{employeeId}")
-    public String getAvailabilityByEmployee(@PathVariable Long employeeId) {
-        return "Availability for employee " + employeeId;
+    public List<EmployeeAvailability> getByEmployee(@PathVariable Long employeeId) {
+        return availabilityService.getAvailabilityByEmployee(employeeId);
     }
-    @GetMapping("/{availabilityId}")
-    public String getAvailability(@PathVariable Long availabilityId) {
-        return "Availability " + availabilityId;
-    }
-    @GetMapping("/date/{date}")
-    public String getAvailabilityByDate(
-            @PathVariable
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-            LocalDate date) {
 
-        return "Availability on " + date;
+    @GetMapping("/{availabilityId}")
+    public EmployeeAvailability getAvailability(@PathVariable Long availabilityId) {
+        return availabilityRepository.findById(availabilityId).orElse(null);
+    }
+
+    @GetMapping("/date/{date}")
+    public List<EmployeeAvailability> getByDate(@PathVariable String date) {
+        return availabilityRepository.findByAvailableDate(LocalDate.parse(date));
     }
 }

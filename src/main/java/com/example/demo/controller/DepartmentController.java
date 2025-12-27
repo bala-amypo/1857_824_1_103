@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Department;
 import com.example.demo.service.DepartmentService;
 import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/departments")
+@RequestMapping("/api/departments")
 public class DepartmentController {
 
     private final DepartmentService departmentService;
@@ -21,17 +22,22 @@ public class DepartmentController {
     }
 
     @PostMapping
-    public Department create(@RequestBody Department department) {
+    public Department createDepartment(@RequestBody Department department) {
         return departmentService.createDepartment(department);
     }
 
+    @GetMapping
+    public List<Department> getAllDepartments() {
+        return departmentService.getAllDepartments();
+    }
+
     @GetMapping("/{id}")
-    public Department get(@PathVariable Long id) {
+    public Department getDepartment(@PathVariable Long id) {
         return departmentService.getDepartmentById(id);
     }
 
-    @GetMapping
-    public List<Department> getAll() {
-        return departmentService.getAllDepartments();
+    @DeleteMapping("/{id}")
+    public void deleteDepartment(@PathVariable Long id) {
+        departmentService.getDepartmentById(id);
     }
 }
