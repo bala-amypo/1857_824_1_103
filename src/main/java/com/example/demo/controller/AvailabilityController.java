@@ -1,48 +1,35 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.EmployeeAvailability;
-import com.example.demo.repository.EmployeeAvailabilityRepository;
+import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.service.AvailabilityService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDate;
 import java.util.List;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/availability")
+@RequestMapping("/availability")
 public class AvailabilityController {
 
-    private final AvailabilityService availabilityService;
-    private final EmployeeAvailabilityRepository availabilityRepository;
+    private final AvailabilityService service;
+    private final EmployeeRepository employeeRepository;
 
-    public AvailabilityController(
-            AvailabilityService availabilityService,
-            EmployeeAvailabilityRepository availabilityRepository) {
-        this.availabilityService = availabilityService;
-        this.availabilityRepository = availabilityRepository;
-    }
-
-    @PostMapping("/{employeeId}")
-    public EmployeeAvailability setAvailability(@RequestBody EmployeeAvailability availability) {
-        return availabilityService.markAvailability(availability);
-    }
-
-    @GetMapping("/employee/{employeeId}")
-    public List<EmployeeAvailability> getByEmployee(@PathVariable Long employeeId) {
-        return availabilityService.getAvailabilityByEmployee(employeeId);
-    }
-
-    @GetMapping("/{availabilityId}")
-    public EmployeeAvailability getAvailability(@PathVariable Long availabilityId) {
-        return availabilityRepository.findById(availabilityId).orElse(null);
+    public AvailabilityController(AvailabilityService service,
+                                  EmployeeRepository employeeRepository) {
+        this.service = service;
+        this.employeeRepository = employeeRepository;
     }
 
     @GetMapping("/date/{date}")
-    public List<EmployeeAvailability> getByDate(@PathVariable String date) {
-        return availabilityRepository.findByAvailableDate(LocalDate.parse(date));
+    public ResponseEntity<List<EmployeeAvailability>> byDate(@PathVariable String date) {
+        LocalDate d = LocalDate.parse(date);
+        return ResponseEntity.ok(service.getByDate(d));
+    }
+
+    @PostMapping
+    public ResponseEntity<EmployeeAvailability> create(@RequestBody EmployeeAvailability av) {
+        return ResponseEntity.ok(service.create(av));
     }
 }

@@ -2,42 +2,39 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Employee;
 import com.example.demo.service.EmployeeService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/employees")
+@RequestMapping("/employees")
 public class EmployeeController {
 
-    private final EmployeeService employeeService;
+    private final EmployeeService service;
 
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
+    public EmployeeController(EmployeeService service) {
+        this.service = service;
     }
 
-    @PostMapping("/register")
-    public Employee registerEmployee(@RequestBody Employee employee) {
-        return employeeService.createEmployee(employee);
-    }
-
-    @GetMapping("/all")
-    public List<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    @GetMapping
+    public ResponseEntity<List<Employee>> list() {
+        return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployee(@PathVariable Long id) {
-        return employeeService.getEmployeeById(id);
+    public ResponseEntity<Employee> get(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getEmployee(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<Employee> create(@RequestBody Employee employee) {
+        return ResponseEntity.ok(service.createEmployee(employee));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteEmployee(@PathVariable Long id) {
-        employeeService.getEmployeeById(id);
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        service.deleteEmployee(id);
+        return ResponseEntity.ok("Deleted");
     }
 }
