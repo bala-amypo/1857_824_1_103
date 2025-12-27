@@ -5,7 +5,7 @@ import java.time.LocalTime;
 
 public class TimeUtils {
 
-    public static long calculateHours(LocalTime start, LocalTime end) {
-        return Duration.between(start, end).toHours();
+    public static long minutesBetween(LocalTime t1, LocalTime t2) {
+        return Duration.between(t1, t2).toMinutes();
     }
 }

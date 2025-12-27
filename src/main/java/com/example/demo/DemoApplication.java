@@ -1,18 +1,13 @@
-package com.example.demo.servlet;
+package com.example.demo;
 
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.IOException;
+@SpringBootApplication
+public class DemoApplication {
 
-public class DemoServlet extends HttpServlet {
+	public static void main(String[] args) {
+		SpringApplication.run(DemoApplication.class, args);
+	}
 
-    @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) throws IOException {
-
-        response.setContentType("text/plain");
-        response.getWriter().write("Servlet Running");
-    }
 }
