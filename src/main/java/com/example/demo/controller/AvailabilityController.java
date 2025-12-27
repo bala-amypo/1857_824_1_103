@@ -1,44 +1,48 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.RewardRule;
-import com.example.demo.service.RewardRuleService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import com.example.demo.model.EmployeeAvailability;
+import com.example.demo.repository.EmployeeAvailabilityRepository;
+import com.example.demo.service.AvailabilityService;
+import java.time.LocalDate;
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/reward-rules")
-public class RewardRuleController {
+@RequestMapping("/api/availability")
+public class AvailabilityController {
 
-    private final RewardRuleService ruleService;
+    private final AvailabilityService availabilityService;
+    private final EmployeeAvailabilityRepository availabilityRepository;
 
-    public RewardRuleController(RewardRuleService ruleService) {
-        this.ruleService = ruleService;
+    public AvailabilityController(
+            AvailabilityService availabilityService,
+            EmployeeAvailabilityRepository availabilityRepository) {
+        this.availabilityService = availabilityService;
+        this.availabilityRepository = availabilityRepository;
     }
 
-    @PostMapping
-    public ResponseEntity<RewardRule> createRule(@RequestBody RewardRule rule) {
-        return ResponseEntity.ok(ruleService.createRule(rule));
+    @PostMapping("/{employeeId}")
+    public EmployeeAvailability setAvailability(@RequestBody EmployeeAvailability availability) {
+        return availabilityService.markAvailability(availability);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<RewardRule> getRuleById(@PathVariable Long id) {
-        return ResponseEntity.ok(ruleService.getRuleById(id));
+    @GetMapping("/employee/{employeeId}")
+    public List<EmployeeAvailability> getByEmployee(@PathVariable Long employeeId) {
+        return availabilityService.getAvailabilityByEmployee(employeeId);
     }
 
-    @GetMapping
-    public ResponseEntity<List<RewardRule>> getAllRules() {
-        return ResponseEntity.ok(ruleService.getAllRules());
+    @GetMapping("/{availabilityId}")
+    public EmployeeAvailability getAvailability(@PathVariable Long availabilityId) {
+        return availabilityRepository.findById(availabilityId).orElse(null);
     }
 
-    @GetMapping("/active")
-    public ResponseEntity<List<RewardRule>> getActiveRules() {
-        return ResponseEntity.ok(ruleService.getActiveRules());
-    }
-
-    @GetMapping("/card/{cardId}")
-    public ResponseEntity<List<RewardRule>> getRulesByCard(@PathVariable Long cardId) {
-        return ResponseEntity.ok(ruleService.getRulesByCard(cardId));
+    @GetMapping("/date/{date}")
+    public List<EmployeeAvailability> getByDate(@PathVariable String date) {
+        return availabilityRepository.findByAvailableDate(LocalDate.parse(date));
     }
 }
