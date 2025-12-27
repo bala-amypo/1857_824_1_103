@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface ShiftTemplateService {
 
-    ShiftTemplate create(ShiftTemplate template);
+    ShiftTemplate createShiftTemplate(ShiftTemplate template);
 
-    List<ShiftTemplate> getByDepartment(Long departmentId);
+    List<ShiftTemplate> getTemplatesByDepartment(Long departmentId);
 }

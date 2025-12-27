@@ -3,43 +3,27 @@ package com.example.demo.service.impl;
 import com.example.demo.model.EmployeeAvailability;
 import com.example.demo.repository.EmployeeAvailabilityRepository;
 import com.example.demo.service.AvailabilityService;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AvailabilityServiceImpl implements AvailabilityService {
 
     private final EmployeeAvailabilityRepository availabilityRepository;
 
+    @Autowired
     public AvailabilityServiceImpl(EmployeeAvailabilityRepository availabilityRepository) {
         this.availabilityRepository = availabilityRepository;
     }
 
     @Override
-    public EmployeeAvailability create(EmployeeAvailability availability) {
+    public EmployeeAvailability markAvailability(EmployeeAvailability availability) {
         return availabilityRepository.save(availability);
     }
 
     @Override
-    public EmployeeAvailability update(Long id, EmployeeAvailability availability) {
-        EmployeeAvailability existing = availabilityRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Availability not found"));
-
-        existing.setEmployee(availability.getEmployee());
-        existing.setAvailableDate(availability.getAvailableDate());
-
-        return availabilityRepository.save(existing);
-    }
-
-    @Override
-    public void delete(Long id) {
-        availabilityRepository.deleteById(id);
-    }
-
-    @Override
-    public List<EmployeeAvailability> getByDate(LocalDate date) {
-        return availabilityRepository.findAll(); 
+    public List<EmployeeAvailability> getAvailabilityByEmployee(Long employeeId) {
+        return availabilityRepository.findByEmployeeId(employeeId);
     }
 }
